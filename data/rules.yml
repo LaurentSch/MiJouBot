@@ -21,3 +21,13 @@ rules:
   steps:
   - intent: journal_now
   - action: utter_journal_prompt
+
+- rule: No to journal
+  steps:
+  - intent: journal_later
+  - action: utter_ask_later
+
+- rule: Set reminder
+  steps:
+  - intent: remind_me
+  - action: set_reminder

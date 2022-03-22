@@ -7,10 +7,13 @@ intents:
   - bot_challenge
   - journal_now
   - journal_later
+  - remind_me
 
 
 entities:
 - mood
+- remind_me
+
 
 slots:
   mood:
@@ -19,6 +22,12 @@ slots:
     mappings:
     - type: from_entity
       entity: mood
+  remind_me:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: remind_me
 
 responses:
   utter_greet:
@@ -52,6 +61,23 @@ responses:
   - text: Why are you feeling {mood}?
   - text: How was your day?
   - text: Can you describe one thing you were grateful for today?
+
+  utter_ask_later:
+  - text: "Do you want me to remind you later?"
+    buttons:
+      - title: "15min"
+        payload: '/remind_me{{"remind_me":"15"}}'
+      - title: "30min"
+        payload: '/remind_me{{"remind_me":"30"}}'
+      - title: "1 hour"
+        payload: '/remind_me{{"remind_me":"60"}}'
+      - title: "4 hours"
+        payload: '/remind_me{{"remind_me":"240"}}'
+      - title: "Don't remind me"
+        payload: '/remind_me{{"remind_me":"0"}}'
+  
+actions:
+  - set_reminder
 
 session_config:
   session_expiration_time: 60
