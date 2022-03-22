@@ -1,0 +1,58 @@
+version: "3.0"
+
+intents:
+  - greet
+  - goodbye
+  - mood
+  - bot_challenge
+  - journal_now
+  - journal_later
+
+
+entities:
+- mood
+
+slots:
+  mood:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: mood
+
+responses:
+  utter_greet:
+  - text: "Hey! How are you?"
+
+  utter_goodbye:
+  - text: "Bye"
+
+  utter_iamabot:
+  - text: "I am a bot, powered by Rasa."
+
+  utter_ask_mood:
+  - text: "How are you feeling today?"
+    buttons:
+      - title: "Good"
+        payload: '/mood{{"mood":"Good"}}'
+      - title: "Bad"
+        playload: '/mood{{"mood":"Bad"}}'
+      - title: "Content"
+        payload: '/mood{{"mood":"Content"}}'
+  
+  utter_journal:
+  - text: "Do you want to journal now?"
+    buttons:
+      - title: "Yes"
+        payload: "/journal_now"
+      - title: "No/Later"
+        payload: "/journal_later"
+
+  utter_journal_prompt:
+  - text: Why are you feeling {mood}?
+  - text: How was your day?
+  - text: Can you describe one thing you were grateful for today?
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
