@@ -36,5 +36,16 @@ nlu:
     - are you a human?
     - am I talking to a bot?
     - am I talking to a human?
+  
+- intent: remind_me
+  examples: |
+    - in [30 minutes](remind_me)
+    - in (15min)(remind_me)
+    - in [42 min](remind_me)
+    - [tomorrow](remind_me)
+    - [2h](remind_me)
+    - in [two hours](remind_me)
+    - give me [2min](remind_me)
+    - [7 hours](remind_me)
 
 
