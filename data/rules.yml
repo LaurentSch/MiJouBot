@@ -1,4 +1,4 @@
-version: "3.0"
+version: "3.1"
 
 rules:
 
@@ -17,10 +17,24 @@ rules:
   - intent: mood
   - action: utter_journal
 
-- rule: Start journal
+- rule: Activate journal_form #and collect entry
   steps:
   - intent: journal_now
-  - action: utter_journal_prompt
+  - action: journal_form
+  - active_loop: journal_form
+  #- action: utter_journal_prompt
+
+
+- rule: submit journal_entry
+  condition:
+  - active_loop: journal_form
+  steps:
+  - action: journal_form
+  - active_loop: null
+  # - slot_was_set:
+  #   - requested_slot: null
+  - action: utter_journal_saved
+  - action: utter_journal_more
 
 - rule: No to journal
   steps:
@@ -31,3 +45,8 @@ rules:
   steps:
   - intent: remind_me
   - action: set_reminder
+
+- rule: End conversation
+  steps:
+  - intent: end_conversation
+  - action: utter_goodbye

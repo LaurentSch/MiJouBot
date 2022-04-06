@@ -1,4 +1,4 @@
-version: "3.0"
+version: "3.1"
 
 intents:
   - greet
@@ -8,6 +8,8 @@ intents:
   - journal_now
   - journal_later
   - remind_me
+  - end_conversation
+  - journal_entry
 
 
 entities:
@@ -28,6 +30,16 @@ slots:
     mappings:
     - type: from_entity
       entity: remind_me
+  journal_entry:
+    type: text
+    influence_conversation: false
+    mappings:
+    - type: from_text
+      #intent: None
+      conditions:
+      - active_loop: journal_form
+        requested_slot: journal_entry
+      
 
 responses:
   utter_greet:
@@ -45,7 +57,7 @@ responses:
       - title: "Good"
         payload: '/mood{{"mood":"Good"}}'
       - title: "Bad"
-        playload: '/mood{{"mood":"Bad"}}'
+        payload: '/mood{{"mood":"Bad"}}'
       - title: "Content"
         payload: '/mood{{"mood":"Content"}}'
   
@@ -57,10 +69,22 @@ responses:
       - title: "No/Later"
         payload: "/journal_later"
 
-  utter_journal_prompt:
+  utter_ask_journal_entry:  #a test
   - text: Why are you feeling {mood}?
   - text: How was your day?
   - text: Can you describe one thing you were grateful for today?
+  - text: What can you do right now to make today a good day?
+
+  utter_journal_saved:
+  - text: This journal entry was saved; {journal_entry}
+
+  utter_journal_more:
+  - text: Do you want to add to that?
+    buttons:
+      - title: "Yes"
+        payload: "/journal_now"
+      - title: "No"
+        payload: "/end_conversation" 
 
   utter_ask_later:
   - text: "Do you want me to remind you later?"
@@ -78,6 +102,13 @@ responses:
   
 actions:
   - set_reminder
+  - collect_journaling
+
+forms:
+  journal_form:
+    required_slots:
+    - journal_entry
+
 
 session_config:
   session_expiration_time: 60
