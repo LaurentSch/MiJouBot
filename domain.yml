@@ -10,6 +10,7 @@ intents:
   - remind_me
   - end_conversation
   - journal_entry
+  - EXTERNAL_reminder
   - view_db
 
 

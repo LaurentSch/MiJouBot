@@ -100,7 +100,6 @@ class ResetJournalSlot(Action):
         tracker: Tracker,
         domain: Dict[Text, Any],
     ) -> List[Dict[Text, Any]]:
-        print("now what?")
         return [SlotSet("journal_entry", None)]
 
 
@@ -144,9 +143,9 @@ class ActionSetReminder(Action):
         domain: Dict[Text, Any],
     ) -> List[Dict[Text, Any]]:
 
-        dispatcher.utter_message("I will remind you " + tracker.get_slot("remind_me") + " in minutes.")
+        dispatcher.utter_message("I will remind you in " + tracker.get_slot("remind_me") + " minutes.")
 
-        date = datetime.datetime.now() + datetime.timedelta(minutes=tracker.get_slot("remind_me"))
+        date = datetime.datetime.now() + datetime.timedelta(minutes=int(tracker.get_slot("remind_me")))
         dispatcher.utter_message("Reminder at this time:" + date.strftime("%A %d-%b-%Y %H:%M:%S"))
         entities = tracker.latest_message.get("entities")
 
