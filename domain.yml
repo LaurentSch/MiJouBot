@@ -107,6 +107,7 @@ actions:
   - action_set_reminder
   - validate_journal_form
   - action_view_all_entries
+  - action_reset_journal_slot
 
 forms:
   journal_form:

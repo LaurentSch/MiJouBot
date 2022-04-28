@@ -55,7 +55,7 @@ import sqlite3
 from typing import Text, List, Any, Dict
 
 from rasa_sdk import Tracker, FormValidationAction, Action
-from rasa_sdk.events import EventType, ReminderScheduled
+from rasa_sdk.events import EventType, ReminderScheduled, SlotSet
 from rasa_sdk.executor import CollectingDispatcher
 from rasa_sdk.types import DomainDict
 from datetime import date
@@ -88,6 +88,20 @@ class ValidateJournalForm(FormValidationAction):     #instead of the base action
         conn.commit()
         conn.close
         print("closed db")
+
+
+class ResetJournalSlot(Action):
+    def name(self) -> Text:
+        return "action_reset_journal_slot"
+
+    async def run(
+        self,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> List[Dict[Text, Any]]:
+        print("now what?")
+        return [SlotSet("journal_entry", None)]
 
 
 class ViewAllJournalEntries(Action):
