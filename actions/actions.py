@@ -50,12 +50,15 @@
 #     #     dispatcher.utter_message(a)
 
 import re
+import datetime
+import sqlite3
 from typing import Text, List, Any, Dict
 
 from rasa_sdk import Tracker, FormValidationAction, Action
-from rasa_sdk.events import EventType
+from rasa_sdk.events import EventType, ReminderScheduled
 from rasa_sdk.executor import CollectingDispatcher
 from rasa_sdk.types import DomainDict
+from datetime import date
 
 
 class ValidateJournalForm(FormValidationAction):     #instead of the base action class we inherit from FormValidationAction
@@ -70,14 +73,75 @@ class ValidateJournalForm(FormValidationAction):     #instead of the base action
         domain: DomainDict,
     ) -> Dict[Text, Any]:
         dispatcher.utter_message(text=f"Today you did: {slot_value}.")
+        print("Before the save_in call")
+        self.save_in_database(slot_value, dispatcher)
         return {"journal_entry": slot_value}     #we return a dictionary as specified above. with the valid value attached
 
-    def save_journal_entry(
+    def save_in_database(self, entry, dispatcher):
+        print("start of the save_in. entry = ", entry)
+        conn = sqlite3.connect("journal_log.db")
+        cur = conn.cursor()
+        print("Opened database and cursor")
+        cur.execute("INSERT INTO journal_entries VALUES (:date, :entry)", {'date': date.today(), 'entry': entry})
+        dispatcher.utter_message("Your entry has been saved to the database")
+        print("Added to database")
+        conn.commit()
+        conn.close
+        print("closed db")
+
+
+class ViewAllJournalEntries(Action):
+    def name(self) -> Text:
+        return "action_view_all_entries"
+    
+    async def run(
         self,
-        slot_value: Any,
         dispatcher: CollectingDispatcher,
         tracker: Tracker,
-        domain: DomainDict,
-    ) -> Dict[Text, Any]:
-        #code to save the entry
-        dispatcher.utter_message("Test", slot_value)
+        domain: Dict[Text, Any],
+    ) -> List[Dict[Text, Any]]:
+        print("entered run()")
+        conn = sqlite3.connect("journal_log.db")
+        cur = conn.cursor()
+        print("Opened database and cursor")
+        cur.execute("SELECT * FROM journal_entries")
+        dispatcher.utter_message("___Your entries___")
+        for i in cur.fetchall():
+            dispatcher.utter_message("One the " + i[0] + ", you said: " + i[1])
+        dispatcher.utter_message("___END___")
+        print(cur.fetchall())
+        conn.commit()
+        conn.close
+        print("closed db")
+        
+
+
+
+class ActionSetReminder(Action):
+    """Schedules a reminder, supplied with the last message's entities."""
+
+    def name(self) -> Text:
+        return "action_set_reminder"
+
+    async def run(
+        self,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> List[Dict[Text, Any]]:
+
+        dispatcher.utter_message("I will remind you " + tracker.get_slot("remind_me") + " in minutes.")
+
+        date = datetime.datetime.now() + datetime.timedelta(minutes=tracker.get_slot("remind_me"))
+        dispatcher.utter_message("Reminder at this time:" + date.strftime("%A %d-%b-%Y %H:%M:%S"))
+        entities = tracker.latest_message.get("entities")
+
+        reminder = ReminderScheduled(
+            "EXTERNAL_reminder",
+            trigger_date_time=date,
+            entities=entities,
+            name="my_reminder",
+            kill_on_user_message=False,
+        )
+
+        return [reminder]

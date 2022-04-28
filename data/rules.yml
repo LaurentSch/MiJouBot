@@ -22,7 +22,6 @@ rules:
   - intent: journal_now
   - action: journal_form
   - active_loop: journal_form
-  #- action: utter_journal_prompt
 
 
 - rule: submit journal_entry
@@ -36,6 +35,12 @@ rules:
   - action: utter_journal_saved
   - action: utter_journal_more
 
+- rule: view database
+  steps:
+  - intent: view_db
+  - action: action_view_all_entries
+  - action: utter_goodbye
+
 - rule: No to journal
   steps:
   - intent: journal_later
@@ -44,7 +49,15 @@ rules:
 - rule: Set reminder
   steps:
   - intent: remind_me
-  - action: set_reminder
+    entities:
+    - remind_me
+  - action: action_set_reminder
+  - action: utter_goodbye
+
+- rule: Trigger `action_react_to_reminder` for `EXTERNAL_reminder`
+  steps:
+  - intent: EXTERNAL_reminder
+  - action: utter_journal
 
 - rule: End conversation
   steps:

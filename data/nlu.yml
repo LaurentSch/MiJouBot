@@ -47,5 +47,7 @@ nlu:
     - in [two hours](remind_me)
     - give me [2min](remind_me)
     - [7 hours](remind_me)
+    - wait for [60 seconds](remind_me)
+    - chill for [500s](remind_me)
 
 
