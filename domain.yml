@@ -10,6 +10,7 @@ intents:
   - remind_me
   - end_conversation
   - journal_entry
+  - view_db
 
 
 entities:
@@ -85,6 +86,8 @@ responses:
         payload: "/journal_now"
       - title: "No"
         payload: "/end_conversation" 
+      - title: "View my past entries"
+        payload: "/view_db"
 
   utter_ask_later:
   - text: "Do you want me to remind you later?"
@@ -101,8 +104,9 @@ responses:
         payload: '/remind_me{{"remind_me":"0"}}'
   
 actions:
-  - set_reminder
-  - collect_journaling
+  - action_set_reminder
+  - validate_journal_form
+  - action_view_all_entries
 
 forms:
   journal_form:
