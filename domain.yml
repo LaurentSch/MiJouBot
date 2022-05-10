@@ -12,6 +12,8 @@ intents:
   - journal_entry
   - EXTERNAL_reminder
   - view_db
+  - fill_survey
+  - filled_survey
 
 
 entities:
@@ -46,9 +48,9 @@ slots:
 responses:
   utter_greet:
   - text: "Hey! How are you?"
-
+  
   utter_goodbye:
-  - text: "Bye"
+  - text: "Bye, until tomorrow!"
 
   utter_iamabot:
   - text: "I am a bot, powered by Rasa."
@@ -66,8 +68,6 @@ responses:
         payload: '/mood{{"mood":"Bad"}}'
       - title: "Terrible"
         payload: '/mood{{"mood":"Terrible"}}'  
-      
-      
   
   utter_journal:
   - text: "Do you want to journal now?"
@@ -77,7 +77,7 @@ responses:
       - title: "No/Later"
         payload: "/journal_later"
 
-  utter_ask_journal_entry:  #a test
+  utter_ask_journal_entry:
   - text: Why are you feeling {mood}?
   - text: How was your day?
   - text: Can you describe one thing you were grateful for today?
@@ -93,7 +93,7 @@ responses:
       - title: "Yes"
         payload: "/journal_now"
       - title: "No"
-        payload: "/end_conversation" 
+        payload: "/fill_survey" 
       - title: "View my past entries"
         payload: "/view_db"
 
@@ -112,6 +112,15 @@ responses:
         payload: '/remind_me{{"remind_me":"0"}}'
     # custom:
     #   input_type: "disable"
+  
+  utter_fill_survey:
+  - text: "Please fill out the survey for today. [Survey Link](https://forms.gle/rmyVionZjkqMGK956)"
+    buttons:
+      - title: "Done"
+        payload: "/filled_survey"
+  
+  utter_thanks:
+  - text: "Thank you!"
   
 actions:
   - action_set_reminder

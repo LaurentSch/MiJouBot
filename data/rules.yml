@@ -30,16 +30,25 @@ rules:
   steps:
   - action: journal_form
   - active_loop: null
-  # - slot_was_set:
-  #   - requested_slot: null
   - action: utter_journal_saved
-  - action: action_reset_journal_slot #maybe this should work?
+  - action: action_reset_journal_slot
   - action: utter_journal_more
 
 - rule: view database
   steps:
   - intent: view_db
   - action: action_view_all_entries
+  - action: utter_fill_survey
+
+- rule: Ask to fill survey
+  steps:
+  - intent: fill_survey
+  - action: utter_fill_survey
+
+- rule: Thanks for filling the survey
+  steps:
+  - intent: filled_survey
+  - action: utter_thanks
   - action: utter_goodbye
 
 - rule: No to journal
