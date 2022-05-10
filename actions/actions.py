@@ -128,6 +128,22 @@ class ViewAllJournalEntries(Action):
         print("closed db")
         
 
+# class ValidateReminderTimeForm(FormValidationAction):
+#     def name(self) -> Text:
+#         return "validate_reminder_time_form"
+    
+#     def validate_journal_entry(
+#         self,
+#         slot_value: Any,
+#         dispatcher: CollectingDispatcher,
+#         tracker: Tracker,
+#         domain: DomainDict,
+#     ) -> Dict[Text, Any]:
+#         dispatcher.utter_message(text=f"Today you did: {slot_value}.")
+#         print("Before the save_in call")
+#         self.save_in_database(slot_value, dispatcher)
+#         return {"journal_entry": slot_value}
+
 
 
 class ActionSetReminder(Action):

@@ -56,12 +56,18 @@ responses:
   utter_ask_mood:
   - text: "How are you feeling today?"
     buttons:
+      - title: "Great"
+        payload: '/mood{{"mood": "Great"}}'
       - title: "Good"
         payload: '/mood{{"mood":"Good"}}'
+      - title: "Okay"
+        payload: '/mood{{"mood":"So-so"}}'  
       - title: "Bad"
         payload: '/mood{{"mood":"Bad"}}'
-      - title: "Content"
-        payload: '/mood{{"mood":"Content"}}'
+      - title: "Terrible"
+        payload: '/mood{{"mood":"Terrible"}}'  
+      
+      
   
   utter_journal:
   - text: "Do you want to journal now?"
@@ -76,6 +82,7 @@ responses:
   - text: How was your day?
   - text: Can you describe one thing you were grateful for today?
   - text: What can you do right now to make today a good day?
+  - text: Can you tell me one positive and one negative thing of today?
 
   utter_journal_saved:
   - text: This journal entry was saved; {journal_entry}
@@ -103,6 +110,8 @@ responses:
         payload: '/remind_me{{"remind_me":"240"}}'
       - title: "Don't remind me"
         payload: '/remind_me{{"remind_me":"0"}}'
+    # custom:
+    #   input_type: "disable"
   
 actions:
   - action_set_reminder
