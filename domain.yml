@@ -1,26 +1,24 @@
-version: "3.1"
-
+version: '3.0'
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
 intents:
-  - greet
-  - goodbye
-  - mood
-  - bot_challenge
-  - journal_now
-  - journal_later
-  - remind_me
-  - end_conversation
-  - journal_entry
-  - EXTERNAL_reminder
-  - view_db
-  - fill_survey
-  - filled_survey
-
-
+- greet
+- goodbye
+- mood
+- bot_challenge
+- journal_now
+- journal_later
+- remind_me
+- end_conversation
+- journal_entry
+- EXTERNAL_reminder
+- view_db
+- fill_survey
+- filled_survey
 entities:
 - mood
 - remind_me
-
-
 slots:
   mood:
     type: text
@@ -39,101 +37,79 @@ slots:
     influence_conversation: false
     mappings:
     - type: from_text
-      #intent: None
       conditions:
       - active_loop: journal_form
         requested_slot: journal_entry
-      
-
 responses:
   utter_greet:
-  - text: "Hey! How are you?"
-  
+  - text: Hey! How are you?
   utter_goodbye:
-  - text: "Bye, until tomorrow!"
-
+  - text: Bye, until tomorrow!
   utter_iamabot:
-  - text: "I am a bot, powered by Rasa."
-
+  - text: I am a bot, powered by Rasa.
   utter_ask_mood:
-  - text: "How are you feeling today?"
-    buttons:
-      - title: "Great"
-        payload: '/mood{{"mood": "Great"}}'
-      - title: "Good"
-        payload: '/mood{{"mood":"Good"}}'
-      - title: "Okay"
-        payload: '/mood{{"mood":"So-so"}}'  
-      - title: "Bad"
-        payload: '/mood{{"mood":"Bad"}}'
-      - title: "Terrible"
-        payload: '/mood{{"mood":"Terrible"}}'  
-  
+  - buttons:
+    - payload: '/mood{{"mood": "Great"}}'
+      title: Great
+    - payload: /mood{{"mood":"Good"}}
+      title: Good
+    - payload: /mood{{"mood":"So-so"}}
+      title: Okay
+    - payload: /mood{{"mood":"Bad"}}
+      title: Bad
+    - payload: /mood{{"mood":"Terrible"}}
+      title: Terrible
+    text: How are you feeling today?
   utter_journal:
-  - text: "Do you want to journal now?"
-    buttons:
-      - title: "Yes"
-        payload: "/journal_now"
-      - title: "No/Later"
-        payload: "/journal_later"
-
+  - buttons:
+    - payload: /journal_now
+      title: Yes
+    - payload: /journal_later
+      title: No/Later
+    text: Do you want to journal now?
   utter_ask_journal_entry:
   - text: Why are you feeling {mood}?
   - text: How was your day?
   - text: Can you describe one thing you were grateful for today?
   - text: What can you do right now to make today a good day?
   - text: Can you tell me one positive and one negative thing of today?
-
   utter_journal_saved:
   - text: This journal entry was saved; {journal_entry}
-
   utter_journal_more:
-  - text: Do you want to add to that?
-    buttons:
-      - title: "Yes"
-        payload: "/journal_now"
-      - title: "No"
-        payload: "/fill_survey" 
-      - title: "View my past entries"
-        payload: "/view_db"
-
+  - buttons:
+    - payload: /journal_now
+      title: Yes
+    - payload: /fill_survey
+      title: No
+    - payload: /view_db
+      title: View my past entries
+    text: Do you want to add to that?
   utter_ask_later:
-  - text: "Do you want me to remind you later?"
-    buttons:
-      - title: "15min"
-        payload: '/remind_me{{"remind_me":"15"}}'
-      - title: "30min"
-        payload: '/remind_me{{"remind_me":"30"}}'
-      - title: "1 hour"
-        payload: '/remind_me{{"remind_me":"60"}}'
-      - title: "4 hours"
-        payload: '/remind_me{{"remind_me":"240"}}'
-      - title: "Don't remind me"
-        payload: '/remind_me{{"remind_me":"0"}}'
-    # custom:
-    #   input_type: "disable"
-  
+  - buttons:
+    - payload: /remind_me{{"remind_me":"15"}}
+      title: 15min
+    - payload: /remind_me{{"remind_me":"30"}}
+      title: 30min
+    - payload: /remind_me{{"remind_me":"60"}}
+      title: 1 hour
+    - payload: /remind_me{{"remind_me":"240"}}
+      title: 4 hours
+    - payload: /remind_me{{"remind_me":"0"}}
+      title: Don't remind me
+    text: Do you want me to remind you later?
   utter_fill_survey:
-  - text: "Please fill out the survey for today. [Survey Link](https://forms.gle/rmyVionZjkqMGK956)"
-    buttons:
-      - title: "Done"
-        payload: "/filled_survey"
-  
+  - buttons:
+    - payload: /filled_survey
+      title: Done
+    text: Please fill out the survey for today. [Survey Link](https://forms.gle/TUBsHUHZj65QCFaP8)
   utter_thanks:
-  - text: "Thank you!"
-  
+  - text: Thank you!
 actions:
-  - action_set_reminder
-  - validate_journal_form
-  - action_view_all_entries
-  - action_reset_journal_slot
-
+- action_set_reminder
+- validate_journal_form
+- action_view_all_entries
+- action_reset_journal_slot
 forms:
   journal_form:
     required_slots:
     - journal_entry
-
-
-session_config:
-  session_expiration_time: 60
-  carry_over_slots_to_new_session: true
