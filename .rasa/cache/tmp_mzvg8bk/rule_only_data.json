@@ -1,8 +1,0 @@
-{
-  "rule_only_slots": [
-    "remind_me"
-  ],
-  "rule_only_loops": [
-    "journal_form"
-  ]
-}
