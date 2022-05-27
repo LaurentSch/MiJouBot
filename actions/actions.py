@@ -181,5 +181,5 @@ class ActionSetReminder(Action):
 #         }
 #         print()
 
-import telegram.ext
+# import telegram.ext
 
