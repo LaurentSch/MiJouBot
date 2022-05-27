@@ -180,3 +180,6 @@ class ActionSetReminder(Action):
 #             file_get_contents($website."/sendmessage?chat_id=".$chatId.);
 #         }
 #         print()
+
+import telegram.ext
+
