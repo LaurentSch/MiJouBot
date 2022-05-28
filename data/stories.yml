@@ -5,7 +5,8 @@ stories:
 - story: happy path
   steps:
   - intent: greet
-  - action: utter_ask_mood
+  - action: utter_hello
+  - action: utter_introduction
 #   - intent: mood
 #   - action: utter_journal
 #   - intent: journal_now

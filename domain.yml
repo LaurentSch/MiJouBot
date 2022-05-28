@@ -16,6 +16,9 @@ intents:
 - view_db
 - fill_survey
 - filled_survey
+- journaling_explanation
+- mindfulness_explaination
+- ask_mood
 entities:
 - mood
 - remind_me
@@ -47,6 +50,27 @@ responses:
   - text: Bye, until tomorrow!
   utter_iamabot:
   - text: I am a bot, powered by Rasa.
+  utter_hello:
+  - text: Hello, I am MiJouBot, a chatbot that helps you to improve your mood by encouraging you to do mindful journaling.
+  utter_introduction:
+  - buttons:
+    - payload: /ask_mood
+      title: Start
+    - payload: /journaling_explanation
+      title: Journaling?
+    - payload: /mindfulness_explaination
+      title: Mindfulness?
+    text: Do you want to start now or ask a question 
+  utter_explain_journaling:
+  - buttons:
+    - payload: /introduction
+      title: Ok
+    text:  Journaling explaination
+  utter_explain_mindfulness:
+  - buttons:
+    - payload: /introduction
+      title: Ok
+    text:  Mindfulness explaination
   utter_ask_mood:
   - buttons:
     - payload: '/mood{{"mood": "Great"}}'

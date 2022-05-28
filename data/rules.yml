@@ -12,6 +12,26 @@ rules:
   - intent: bot_challenge
   - action: utter_iamabot
 
+- rule: Journaling explaination
+  steps:
+  - intent: journaling_explanation
+  - action: utter_explain_journaling
+
+- rule: Mindfulness explanation
+  steps:
+  - intent: mindfulness_explaination
+  - action: utter_explain_mindfulness
+
+- rule: Start bot functunality
+  steps:
+  - intent: ask_mood
+  - action: utter_ask_mood
+
+- rule: Back to introduction
+  steps:
+  - intent: introduction
+  - action: utter_introduction
+
 - rule: Save mood and continue tree
   steps:
   - intent: mood
