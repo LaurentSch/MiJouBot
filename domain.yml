@@ -48,7 +48,7 @@ responses:
   utter_greet:
   - text: Hey! How are you?
   utter_goodbye:
-  - text: Bye, until tomorrow!
+  - text: Bye, until later!
   utter_iamabot:
   - text: I am a bot, powered by Rasa.
   utter_hello:
@@ -65,20 +65,11 @@ responses:
       title: Privacy?
     text: Do you want to start now or ask a question 
   utter_explain_journaling:
-  - buttons:
-    - payload: /introduction
-      title: Ok
-    text:  Journaling is the act of writing down you thoughts at the end of the day. This practice is shown to improve your mental health and help you get better cotrol over your emotions by improving your self awereness and changing your perception of the events that happened.
+  - text:  Journaling is the act of writing down you thoughts at the end of the day. This practice is shown to improve your mental health and help you get better cotrol over your emotions by improving your self awereness and changing your perception of the events that happened.
   utter_explain_mindfulness:
-  - buttons:
-    - payload: /introduction
-      title: Ok
-    text:  Mindfulness is the awereness you get through paying attention on purpose without judging your experiences.
+  - text:  Mindfulness is the awereness you get through paying attention on purpose without judging your experiences.
   utter_explain_privacy:
-  - buttons:
-    - payload: /introduction
-      title: Ok
-    text:  A journal log is kept so you can go back and look at your past journal entries. These are private and can only be viewed by yourself.
+  - text:  A journal log is kept so you can go back and look at your past journal entries. These are private and can only be viewed by yourself.
   utter_ask_mood:
   - buttons:
     - payload: '/mood{{"mood": "Great"}}'

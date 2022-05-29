@@ -16,16 +16,19 @@ rules:
   steps:
   - intent: journaling_explanation
   - action: utter_explain_journaling
+  - action: utter_introduction
 
 - rule: Mindfulness explanation
   steps:
   - intent: mindfulness_explaination
   - action: utter_explain_mindfulness
+  - action: utter_introduction
 
 - rule: Privacy explanation
   steps:
   - intent: privacy
   - action: utter_explain_privacy
+  - action: utter_introduction
 
 - rule: Start bot functunality
   steps:
