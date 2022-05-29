@@ -73,8 +73,11 @@ class ValidateJournalForm(FormValidationAction):     #instead of the base action
         domain: DomainDict,
     ) -> Dict[Text, Any]:
         #dispatcher.utter_message(text=f"Today you did: {slot_value}.")
+        # Setting webhook
+        # https://api.telegram.org/bot5358927412:AAFLHIzL1EOqRMWHBOitfGYHGe_pyUjn-aE/setWebhook?url=https://66c2-83-99-11-154.eu.ngrok.io/webhooks/telegram/webhook
+        #
         print("Before the save_in call")
-        self.save_in_database(slot_value, dispatcher)
+        # self.save_in_database(slot_value, dispatcher)
         return {"journal_entry": slot_value}     #we return a dictionary as specified above. with the valid value attached
 
     def save_in_database(self, entry, dispatcher):

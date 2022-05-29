@@ -126,8 +126,8 @@ responses:
       title: Yes
     - payload: /fill_survey
       title: No
-    - payload: /view_db
-      title: View my past entries
+    # - payload: /view_db
+    #   title: View my past entries
     text: Do you want to add to that?
   utter_ask_later:
   - buttons:

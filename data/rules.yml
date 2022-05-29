@@ -64,7 +64,7 @@ rules:
   steps:
   - action: journal_form
   - active_loop: null
-  - action: utter_journal_saved
+  #- action: utter_journal_saved
   - action: action_reset_journal_slot
   - action: utter_journal_more
 
