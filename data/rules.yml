@@ -22,6 +22,11 @@ rules:
   - intent: mindfulness_explaination
   - action: utter_explain_mindfulness
 
+- rule: Privacy explanation
+  steps:
+  - intent: privacy
+  - action: utter_explain_privacy
+
 - rule: Start bot functunality
   steps:
   - intent: ask_mood
