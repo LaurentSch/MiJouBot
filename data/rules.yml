@@ -16,16 +16,19 @@ rules:
   steps:
   - intent: journaling_explanation
   - action: utter_explain_journaling
+  - action: utter_introduction
 
 - rule: Mindfulness explanation
   steps:
   - intent: mindfulness_explaination
   - action: utter_explain_mindfulness
+  - action: utter_introduction
 
 - rule: Privacy explanation
   steps:
   - intent: privacy
   - action: utter_explain_privacy
+  - action: utter_introduction
 
 - rule: Start bot functunality
   steps:
@@ -40,6 +43,12 @@ rules:
 - rule: Save mood and continue tree
   steps:
   - intent: mood
+  - action: utter_journal
+
+- rule: Bad Mood cheerup
+  steps:
+  - intent: mood_bad
+  - action: utter_cheer_up
   - action: utter_journal
 
 - rule: Activate journal_form #and collect entry

@@ -6,6 +6,7 @@ intents:
 - greet
 - goodbye
 - mood
+- mood_bad
 - bot_challenge
 - journal_now
 - journal_later
@@ -22,6 +23,7 @@ intents:
 - privacy
 entities:
 - mood
+- mood_bad
 - remind_me
 slots:
   mood:
@@ -48,7 +50,7 @@ responses:
   utter_greet:
   - text: Hey! How are you?
   utter_goodbye:
-  - text: Bye, until tomorrow!
+  - text: Bye, until later!
   utter_iamabot:
   - text: I am a bot, powered by Rasa.
   utter_hello:
@@ -65,33 +67,44 @@ responses:
       title: Privacy?
     text: Do you want to start now or ask a question 
   utter_explain_journaling:
-  - buttons:
-    - payload: /introduction
-      title: Ok
-    text:  Journaling is the act of writing down you thoughts at the end of the day. This practice is shown to improve your mental health and help you get better cotrol over your emotions by improving your self awereness and changing your perception of the events that happened.
+  - text:  Journaling is the act of writing down you thoughts at the end of the day. This practice is shown to improve your mental health and help you get better cotrol over your emotions by improving your self awereness and changing your perception of the events that happened.
   utter_explain_mindfulness:
-  - buttons:
-    - payload: /introduction
-      title: Ok
-    text:  Mindfulness is the awereness you get through paying attention on purpose without judging your experiences.
+  - text:  Mindfulness is the awereness you get through paying attention on purpose without judging your experiences.
   utter_explain_privacy:
-  - buttons:
-    - payload: /introduction
-      title: Ok
-    text:  A journal log is kept so you can go back and look at your past journal entries. These are private and can only be viewed by yourself.
+  - text:  A journal log is kept so you can go back and look at your past journal entries. These are private and can only be viewed by yourself.
   utter_ask_mood:
   - buttons:
     - payload: '/mood{{"mood": "Great"}}'
       title: Great
     - payload: /mood{{"mood":"Good"}}
       title: Good
-    - payload: /mood{{"mood":"So-so"}}
+    - payload: /mood_bad{{"mood":"So-so"}}
       title: Okay
-    - payload: /mood{{"mood":"Bad"}}
+    - payload: /mood_bad{{"mood":"Bad"}}
       title: Bad
-    - payload: /mood{{"mood":"Terrible"}}
+    - payload: /mood_bad{{"mood":"Terrible"}}
       title: Terrible
     text: How are you feeling today?
+  utter_cheer_up:
+  - text: "Here is something to cheer you up:"
+    custom:
+      sticker: "https://c.tenor.com/A-dUfi3bkMoAAAAi/pato-juan.gif"
+  - text: "Here is something to cheer you duck:"
+    custom:
+      sticker: "https://tenor.com/bHQ26.gif"
+  - text: "Here is something to speed you up:"
+    custom:
+      sticker: "https://c.tenor.com/8co4lS37j8cAAAAd/caffeine-ren.gif"
+  - text: "Here is something to cheer you up:"
+    custom:
+      sticker: "https://c.tenor.com/ERyXFVVYtDAAAAAC/maus-tanzen.gif"
+  - text: "Here is something to cheer you up:"
+    custom:
+      sticker: "https://c.tenor.com/Vx-Fmk3G7McAAAAC/cute.gif"
+  - text: "Here is something to cute you up:"
+    custom:
+      sticker: "https://c.tenor.com/x4mb10w_yLwAAAAC/axolotl-minecraft.gif"
+
   utter_journal:
   - buttons:
     - payload: /journal_now
