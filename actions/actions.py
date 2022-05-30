@@ -74,15 +74,17 @@ class ValidateJournalForm(FormValidationAction):     #instead of the base action
     ) -> Dict[Text, Any]:
         #dispatcher.utter_message(text=f"Today you did: {slot_value}.")
         print("Before the save_in call")
-        self.save_in_database(slot_value, dispatcher)
+        self.save_in_database(slot_value, dispatcher, tracker)
         return {"journal_entry": slot_value}     #we return a dictionary as specified above. with the valid value attached
 
-    def save_in_database(self, entry, dispatcher):
+    def save_in_database(self, entry, dispatcher, tracker):
         #print("start of the save_in. entry = ", entry)
         conn = sqlite3.connect("journal_log.db")
         cur = conn.cursor()
         #print("Opened database and cursor")
-        cur.execute("INSERT INTO journal_entries VALUES (:date, :entry)", {'date': date.today(), 'entry': entry})
+        conversation_id = tracker.sender_id
+        print(conversation_id)
+        cur.execute("INSERT INTO journal_entries VALUES (:id, :date, :entry)", {'id':conversation_id,'date': date.today(), 'entry': entry})
         #dispatcher.utter_message("Your entry has been saved to the database")
         #print("Added to database")
         conn.commit()
@@ -117,10 +119,10 @@ class ViewAllJournalEntries(Action):
         conn = sqlite3.connect("journal_log.db")
         cur = conn.cursor()
         print("Opened database and cursor")
-        cur.execute("SELECT * FROM journal_entries")
+        cur.execute("SELECT * FROM journal_entries WHERE id=:id", {'id': tracker.sender_id})
         dispatcher.utter_message("___Your entries___")
         for i in cur.fetchall():
-            dispatcher.utter_message("One the " + i[0] + ", you said: " + i[1])
+            dispatcher.utter_message("One the " + i[1] + ", you said: " + i[2])
         dispatcher.utter_message("___END___")
         print(cur.fetchall())
         conn.commit()
@@ -158,28 +160,4 @@ class ActionSetReminder(Action):
 
         return [reminder]
 
-
-# class ActionGetTelegramID(Action):
-#     """Test to see if I can execute telegram commands on Rasa"""
-
-#     def name(self) -> Text:
-#         return "action_get_telegram_id"
-    
-#     async def run(
-#         self,
-#         dispatcher: CollectingDispatcher,
-#         tracker: Tracker,
-#         domain: Dict[Text, Any],
-#     ) -> List[Dict[Text, Any]]:
-#         print("entered run()")
-#         conn = sqlite3.connect("journal_log.db")
-#         cur = conn.cursor()
-#         $userid = $message["from"]["id"];
-#         if ($text == '/hope') {
-#             $userid;
-#             file_get_contents($website."/sendmessage?chat_id=".$chatId.);
-#         }
-#         print()
-
-# import telegram.ext
 
