@@ -65,7 +65,7 @@ responses:
       title: Mindfulness?
     - payload: /privacy
       title: Privacy?
-    text: Do you want to start now or ask a question 
+    text: Do you want to start now or ask a question?
   utter_explain_journaling:
   - text:  Journaling is the act of writing down you thoughts at the end of the day. This practice is shown to improve your mental health and help you get better cotrol over your emotions by improving your self awereness and changing your perception of the events that happened.
   utter_explain_mindfulness:
