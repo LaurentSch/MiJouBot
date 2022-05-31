@@ -77,15 +77,17 @@ class ValidateJournalForm(FormValidationAction):     #instead of the base action
         # https://api.telegram.org/bot5358927412:AAFLHIzL1EOqRMWHBOitfGYHGe_pyUjn-aE/setWebhook?url=https://66c2-83-99-11-154.eu.ngrok.io/webhooks/telegram/webhook
         #
         print("Before the save_in call")
-        # self.save_in_database(slot_value, dispatcher)
+        self.save_in_database(slot_value, dispatcher, tracker)
         return {"journal_entry": slot_value}     #we return a dictionary as specified above. with the valid value attached
 
-    def save_in_database(self, entry, dispatcher):
+    def save_in_database(self, entry, dispatcher, tracker):
         #print("start of the save_in. entry = ", entry)
         conn = sqlite3.connect("journal_log.db")
         cur = conn.cursor()
         #print("Opened database and cursor")
-        cur.execute("INSERT INTO journal_entries VALUES (:date, :entry)", {'date': date.today(), 'entry': entry})
+        conversation_id = tracker.sender_id
+        print(conversation_id)
+        cur.execute("INSERT INTO journal_entries VALUES (:id, :date, :entry)", {'id':conversation_id, 'date': date.today(), 'entry': entry})
         #dispatcher.utter_message("Your entry has been saved to the database")
         #print("Added to database")
         conn.commit()
@@ -120,10 +122,10 @@ class ViewAllJournalEntries(Action):
         conn = sqlite3.connect("journal_log.db")
         cur = conn.cursor()
         print("Opened database and cursor")
-        cur.execute("SELECT * FROM journal_entries")
+        cur.execute("SELECT * FROM journal_entries WHERE id=:id", {'id': tracker.sender_id})
         dispatcher.utter_message("___Your entries___")
         for i in cur.fetchall():
-            dispatcher.utter_message("One the " + i[0] + ", you said: " + i[1])
+            dispatcher.utter_message("One the " + i[1] + ", you said: " + i[2])
         dispatcher.utter_message("___END___")
         print(cur.fetchall())
         conn.commit()
